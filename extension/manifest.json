@@ -1,0 +1,24 @@
+{
+   "browser_action": {
+      "default_title": "Rewind",
+      "default_icon": "img/icon.png",
+      "default_popup": "index.html"
+   },
+   "description": "Click the button for a visit down memory lane",
+   "icons": {
+      "128": "img/icon.png",
+      "48": "img/icon.png"
+   },
+   "manifest_version": 2,
+   "name": "Rewind",
+   "permissions": [ 
+      "activeTab", 
+      "tabs", 
+      "storage", 
+      "identity", 
+      "http://dcetech.com/sagnik/rewind/get_memory.php",
+      "http://localhost/*" ],
+   "short_name": "Rewind",
+   "version": "1.0",
+   "web_accessible_resources": [ "js/jquery-2.1.4.min.js", "js/main.js", "css/style.css" ]
+}
