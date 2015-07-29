@@ -2,9 +2,9 @@
 
 	include 'connection.php';
 
-	$title = $_POST['title'];
-	$detail = $_POST['detail'];
-	$people = $_POST['people'];
+	$title = str_replace("'", "\'", $_POST['title']);
+	$detail = str_replace("'", "\'", $_POST['detail']);
+	$people = str_replace("'", "\'", $_POST['people']);
 
 	if($people == 'all')
 		$people = 'amsuv';

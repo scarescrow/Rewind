@@ -13,7 +13,6 @@ $(function() {
         if(typeof old_id == 'undefined' || old_id =='' || old_id == null) {
 
                 old_id = 0;
-                console.log(old_id + ',' + user_id);
                 
                 $.ajax({
                         url: url,
@@ -48,39 +47,38 @@ $(function() {
                 $(this).fadeIn(500);
         });
 
-        $('#button').click(function() {
+        $('#button').click(function(e) {
                 
-                $('#header, #detail').each(function() {
-                        $(this).fadeOut(500, function() {
-                                var old_id = localStorage.getItem('mem_id');
-                                $.ajax({
-                                        url: url,
-                                        type: 'POST',
-                                        data: 'mem_id=' + old_id + '&user_id=' + user_id,
-                                        success: function(result) {
-                                                var json = $.parseJSON(result);
-                                                var id = json.id;
-                                                var title = json.title;
-                                                var detail = json.detail;
+                var old_id = localStorage.getItem('mem_id');
+                $('#header, #detail').fadeOut(500, function() {
+                       $.ajax({
+                                url: url,
+                                type: 'POST',
+                                data: 'mem_id=' + old_id + '&user_id=' + user_id,
+                                success: function(result) {
+                                        var json = $.parseJSON(result);
+                                        var id = json.id;
+                                        var title = json.title;
+                                        var detail = json.detail;
 
-                                                detail = detail.replace("\r\n", "<br/>");
-                                                
-                                                localStorage.setItem('mem_id', id);
-                                                localStorage.setItem('title', title);
-                                                localStorage.setItem('detail', detail);
+                                        detail = detail.replace("\r\n", "<br/>");
+                                        
+                                        localStorage.setItem('mem_id', id);
+                                        localStorage.setItem('title', title);
+                                        localStorage.setItem('detail', detail);
+                                        
+                                        $('#header').html(title);
+                                        $('#detail').html(detail);
 
-                                                $('#header').html(title);
-                                                $('#detail').html(detail);
+                                        $('#header, #detail').each(function() {
+                                                $(this).fadeIn(500);
+                                        });
+                                }
 
-                                                $('#header, #detail').each(function() {
-                                                        $(this).fadeIn(500);
-                                                });
-                                        }
-
-                                });
-                                
-                        });
+                        }); 
                 });
+            
+                return false;
 
         });
 });

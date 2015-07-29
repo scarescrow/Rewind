@@ -3,8 +3,8 @@
 	include 'connection.php';
 
 	$id = 0;
-	if(empty($_POST['mem_id']) || empty($_POST['user_id']))
-		die($_POST['mem_id']);
+	if(!isset($_POST['mem_id']) || !isset($_POST['user_id']))
+		die('Access Denied');
 
 	$id = $_POST['mem_id'];
 	$user_id = $_POST['user_id'];
