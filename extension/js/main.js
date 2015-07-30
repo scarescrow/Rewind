@@ -6,6 +6,7 @@ $(function() {
                 window.location.replace('login.html');
         }
 
+        var default_no_of_characters = 80;
         var old_id = localStorage.getItem('mem_id');
         
         var url = "http://localhost/rewind/web/get_memory.php";
@@ -25,11 +26,16 @@ $(function() {
                                 var detail = json.detail;
 
                                 detail = detail.replace("\r\n", "<br/>");
-                                
+
                                 localStorage.setItem('mem_id', id);
                                 localStorage.setItem('title', title);
                                 localStorage.setItem('detail', detail);
 
+                                if(detail.toString().length <= default_no_of_characters)
+                                    $('#detail_text').css('margin-top', '80px');
+                                else
+                                    $('#detail_text').css('margin-top', '10px');
+                                
                                 $('#header').html(title);
                                 $('#detail').html(detail);
                         }
@@ -38,19 +44,25 @@ $(function() {
 
         } else {
 
+                var title = localStorage.getItem('title');
+                var detail = localStorage.getItem('detail');
+                
+                if(detail.toString().length <= default_no_of_characters)
+                    $('#detail_text').css('margin-top', '80px');
+                else
+                    $('#detail_text').css('margin-top', '10px');
+                
                 $('#header').html(localStorage.getItem('title'));
                 $('#detail').html(localStorage.getItem('detail'));
 
         }
 
-        $('#header, #detail').each(function() {
-                $(this).fadeIn(500);
-        });
+        $('#header, #detail').fadeIn(500);
 
         $('#button').click(function(e) {
                 
                 var old_id = localStorage.getItem('mem_id');
-                $('#header, #detail').fadeOut(500, function() {
+                $('#content').fadeOut(500, function() {
                        $.ajax({
                                 url: url,
                                 type: 'POST',
@@ -67,12 +79,16 @@ $(function() {
                                         localStorage.setItem('title', title);
                                         localStorage.setItem('detail', detail);
                                         
+                                        if(detail.toString().length <= default_no_of_characters)
+                                            $('#detail_text').css('margin-top', '80px');
+                                        else
+                                            $('#detail_text').css('margin-top', '10px');        
+                                        
                                         $('#header').html(title);
                                         $('#detail').html(detail);
 
-                                        $('#header, #detail').each(function() {
-                                                $(this).fadeIn(500);
-                                        });
+                                        $('#content').fadeIn(500);
+
                                 }
 
                         }); 
